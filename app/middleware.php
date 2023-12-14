@@ -7,5 +7,5 @@ return [
     // \think\middleware\LoadLangPack::class,
     // Session初始化
     // \think\middleware\SessionInit::class
-    'jwt' => \app\middleware\JwtMiddleware::class,
+    // 'jwt' => \app\middleware\JwtMiddleware::class,
 ];

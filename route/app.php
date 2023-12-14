@@ -37,3 +37,9 @@ Route::group("/user", function () {
     Route::post("/edit","user/edit");
 
 })->middleware(app\middleware\JwtMiddleware::class);
+
+Route::group("/huobi",function(){
+
+    Route::get("/price/:type","huobi/getPrice");
+
+});
