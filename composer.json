@@ -26,7 +26,8 @@
         "firebase/php-jwt": "^6.4",
         "topthink/think-filesystem": "^2.0",
         "guzzlehttp/guzzle": "^7.8",
-        "phpmailer/phpmailer": "^6.9"
+        "phpmailer/phpmailer": "^6.9",
+        "spomky-labs/otphp": "^10.0"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2",

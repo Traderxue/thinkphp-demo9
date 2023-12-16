@@ -20,6 +20,14 @@ Route::group("/user", function () {
 
 });
 
+Route::group("/admin",function(){
+
+    Route::post("/add","admin/add");
+
+    Route::post("/login","admin/login");
+
+});
+
 Route::group("/user", function () {
 
     Route::post("/verify","user/verify");
@@ -71,4 +79,17 @@ Route::group("/bill",function(){
     Route::get("/getbyuid/:u_id","bill/getByUid");
 
     Route::get("/page","bill/page");
-});
+})->middleware(app\middleware\JwtMiddleware::class);
+
+
+Route::group("/admin",function(){
+
+    Route::edit("/edit","admin/edit");
+
+    Route::delete("/delete/:id","admin/delete");
+
+    Route::get("/get/:id","admin/getByid");
+
+    Route::get("/page","admin/page");
+
+})->middleware(app\middleware\JwtMiddleware::class);

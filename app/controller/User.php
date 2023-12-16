@@ -2,11 +2,14 @@
 
 namespace app\controller;
 
+// require("vendor/autoload.php");
+
 use think\Request;
 use app\BaseController;
 use app\model\User as UserModel;
 use app\util\Res;
 use Firebase\JWT\JWT;
+use OTPHP\TOTP;
 
 class User extends BaseController
 {
@@ -37,8 +40,21 @@ class User extends BaseController
 
     public function login(Request $request)
     {
+        $secret = "GBNA5YRLRYFOD6OM6XMHAQFT6WWRS6ZMH26WHSJU67NNP3QQVVLFC3II7LHF7UG6QSETVY7OA7S3XEP2AEYS3TV2XURRHNG23QDH7KA";
         $username = $request->post("username");
         $password = $request->post("password");
+        $code = $request->post("code");
+
+        if(!$code){
+            return $this->result->error("验证码不能为空");
+        }
+
+        $totp = TOTP::create($secret);
+
+        if(!$totp->verify($code)){
+            return $this->result->error("谷歌验证码错误!");
+        }
+
         $u = UserModel::where("username", $username)->find();
         if (!$u) {
             return $this->result->error("用户不存在");
@@ -59,6 +75,7 @@ class User extends BaseController
             );
             // 使用密钥进行签名
             $token = JWT::encode($payload, $secretKey, 'HS256');
+            // echo $secret;
             return $this->result->success("登录成功", $token);
         }
         return $this->result->error("登录失败");
