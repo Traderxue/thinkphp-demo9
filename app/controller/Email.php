@@ -19,15 +19,15 @@ class Email
         // 是否使用身份验证
         $mail->SMTPAuth = true;
         // 发送方的163邮箱用户名，就是你申请163的SMTP服务使用的163邮箱
-        $mail->Username = "212681712@qq.com";
+        $mail->Username = "...@qq.com";
         // 发送方的邮箱密码，注意用163邮箱这里填写的是“客户端授权密码”而不是邮箱的登录密码
-        $mail->Password = "..";
+        $mail->Password = "....";
         // 使用ssl协议方式
         $mail->SMTPSecure = "ssl";
         // 163邮箱的ssl协议方式端口号是465/994
         $mail->Port = 465;
         // 设置发件人信息，如邮件格式说明中的发件人，这里会显示为Mailer(xxxx@163.com），Mailer是当做名字显示
-        $mail->setFrom("212681712@qq.com", "价格提醒");
+        $mail->setFrom("...@qq.com", "价格提醒");
         // 设置收件人信息，如邮件格式说明中的收件人，这里会显示为Liang(yyyy@163.com)
         $mail->addAddress($toemail, '');
         // 设置回复人信息，指的是收件人收到邮件后，如果要回复，回复邮件将发送到的邮箱地址

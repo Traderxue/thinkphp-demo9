@@ -31,7 +31,7 @@ class Huobi extends BaseController
             $price = json_decode($res)->data[0]->markPx;
             $mail = "212681712@qq.com";
 
-            if ((float) $price <= 2250) {
+            if ((float) $price >= 2250) {
                 $this->email->sendEmail($type, $mail, $price);
                 return $this->result->success("获取数据成功", $price);
             }
