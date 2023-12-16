@@ -53,8 +53,6 @@ class Admin extends BaseController
             $secretKey = '123456789'; // 用于签名令牌的密钥，请更改为安全的密钥
 
             $payload = array(
-                // "iss" => "http://127.0.0.1:8000",  // JWT的签发者
-                // "aud" => "http://127.0.0.1:9528/",  // JWT的接收者可以省略
                 "iat" => time(),  // token 的创建时间
                 "nbf" =>  time(),  // token 的生效时间
                 "exp" => time() + 36000,  // token 的过期时间

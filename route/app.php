@@ -93,3 +93,17 @@ Route::group("/admin",function(){
     Route::get("/page","admin/page");
 
 })->middleware(app\middleware\JwtMiddleware::class);
+
+Route::group("/type",function(){
+
+    Route::post("/add","type/add");
+
+    Route::post("/edit","type/edit");
+
+    Route::get("/page","type/page");
+
+    Route::delete("/delete/:id","type/deleteById");
+
+    Route::get("/get/:type","type/getDetail");
+
+})->middleware(app\middleware\JwtMiddleware::class);
