@@ -52,4 +52,32 @@ class Order extends BaseController
         }
         return $this->result->error("平仓失败");
     }
+
+    public function getByUid($u_id)
+    {
+        $list = OrderModel::where("u_id", $u_id)->select();
+        return $this->result->success("获取数据成功", $list);
+    }
+
+    public function page(Request $reqeust)
+    {
+        $page = $reqeust->param("page");
+        $pageSize = $reqeust->param("pageSize");
+        $u_id = $reqeust->param("u_id");
+        $list = OrderModel::where("u_id", "like", "%{$u_id}%")->paginate([
+            "page" => $page,
+            "list_rows" => $pageSize
+        ]);
+        return $this->result->success("获取数据成功", $list);
+    }
+
+    public function deleteById($id)
+    {
+        $res = OrderModel::where("id", $id)->delete();
+        if ($res) {
+            return $this->result->success("删除数据成功", $res);
+        }
+        return $this->result->error("删除数据失败");
+    }
+    
 }

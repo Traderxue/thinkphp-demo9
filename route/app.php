@@ -43,3 +43,18 @@ Route::group("/huobi",function(){
     Route::get("/price/:type","huobi/getPrice");
 
 });
+
+
+Route::group("/order",function(){
+
+    Route::post("/add","order/add");
+
+    Route::post("/close","order/close");
+
+    Route::get("/getuid/:u_id","order/getByUid");
+
+    Route::get("/page","order/page");
+
+    Route::delete("/delete/:id","order/deleteById");
+
+})->middleware(app\middleware\JwtMiddleware::class);
