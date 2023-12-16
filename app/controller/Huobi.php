@@ -6,36 +6,70 @@ namespace app\controller;
 use GuzzleHttp\Client;
 use app\BaseController;
 use think\Request;
-use app\controller\Email;
 use app\util\Res;
 
 class Huobi extends BaseController
 {
     private $result;
     private $client;
-    private $email;
 
     public function __construct(\think\App $app)
     {
         $this->result = new Res();
 
-        $this->client = new Client([]);
-
-        $this->email = new Email();
+        $this->client = new Client([
+            "proxy" => "http://127.0.0.1:23457",
+            "verify" => false
+        ]);
     }
 
-    public function getPrice($type)
+    public function getDetail($type)        //种类,最高价，最低价，成交量，涨跌幅，最新价
     {
-        while (true) {
-            $res = $this->client->get("http://103.215.80.60/okx/price/{$type}")->getBody()->getContents();
-            $price = json_decode($res)->data[0]->markPx;
-            $mail = "212681712@qq.com";
+        $res = $this->client->get("https://api.huobi.pro/market/detail?symbol={$type}usdt")->getBody()->getContents();
 
-            if ((float) $price >= 2250) {
-                $this->email->sendEmail($type, $mail, $price);
-                return $this->result->success("获取数据成功", $price);
-            }
-            sleep(2);
+        $data = json_decode($res);
+
+        $high = $data->tick->high;
+
+        $low = $data->tick->low;
+
+        $volume = $data->tick->vol;
+
+        $latest = $data->tick->close;
+
+        $parcent = number_format((($data->tick->close - $data->tick->open) / $data->tick->open) * 100, 2);
+
+        if ($parcent > 0) {
+            $up = 1;
+        } else {
+            $up = 0;
         }
+
+
+        $tick = [
+            "type" => $type,
+            "high" => $high,
+            "low" => $low,
+            "volume" => $volume,
+            "latest" => $latest,
+            "parcent" => $parcent,
+            "up" => $up
+        ];
+
+        return $this->result->success("获取数据成功", $tick);
+    }
+
+    public function getDepath($type){
+        $res = $this->client->get("https://api.huobi.pro/market/depth?symbol={$type}usdt&depth=5&type=step0")->getBody()->getContents();
+        $data = json_decode($res);
+        $bids = $data->tick->bids;
+        $asks = $data->tick->asks;
+
+        $tick = [
+            "bids"=>$bids,
+            "askd"=>$asks
+        ];
+
+        return $this->result->success("获取数据成功",$tick);
     }
 }

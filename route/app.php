@@ -48,7 +48,9 @@ Route::group("/user", function () {
 
 Route::group("/huobi",function(){
 
-    Route::get("/price/:type","huobi/getPrice");
+    Route::get("/detail/:type","huobi/getDetail");
+
+    Route::get("/depath/:type","huobi/getDepath");
 
 });
 
