@@ -58,3 +58,17 @@ Route::group("/order",function(){
     Route::delete("/delete/:id","order/deleteById");
 
 })->middleware(app\middleware\JwtMiddleware::class);
+
+
+Route::group("/bill",function(){
+
+    Route::post("/add","bill/add");
+
+    Route::post("/edit","bill/edit");
+
+    Route::delete("/delete/:id","bill/delete");
+
+    Route::get("/getbyuid/:u_id","bill/getByUid");
+
+    Route::get("/page","bill/page");
+});
